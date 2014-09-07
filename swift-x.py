@@ -217,8 +217,14 @@ def main():
 	parser.add_argument('--lib', nargs='?', help='link into static library')
 
 	args = parser.parse_args()
-
-	config = parse_config(args, os.path.dirname(sys.argv[0]) + '/' + "config.txt")
+	
+	script_dir = os.path.dirname(sys.argv[0])
+	real_script_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
+	
+	if os.path.isfile(script_dir + '/' + "config.txt"):
+		config = parse_config(args, script_dir + '/' + "config.txt")
+	else:
+		config = parse_config(args, real_script_dir + '/' + "config.txt")
 
 	local = None
 	local_path = os.getcwd() + '/' + "config.txt"
